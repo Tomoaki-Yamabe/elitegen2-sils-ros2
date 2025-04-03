@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# proxy parameter
-proxy_uri="10.121.48.30:8080"
-proxy_user="J0115457"
-proxy_password="Kitelevos22"
+# setup proxy 
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config --query SecretString --output text)
+export http_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
+export https_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
 
 mkdir -p ~/simulators
 cd ~/simulators

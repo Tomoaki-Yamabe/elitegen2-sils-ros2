@@ -7,16 +7,11 @@ target_url="https://mirrors.ustc.edu.cn/ros2/ubuntu/"
 # https://mirrors.bfsu.edu.cn/ros2/ubuntu/
 # https://mirrors.tuna.tsinghua.edu.cn/ros2/ubuntu/
 
-# プロキシの詳細を設定
-proxy_uri="10.121.48.30:8080"
-proxy_user="J0115457"
-proxy_password="Kitelevos22"
+# setup proxy 
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config --query SecretString --output text)
+export http_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
+export https_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
 
-# プロキシの環境変数を設定
-export http_proxy="http://$proxy_user:$proxy_password@$proxy_uri"
-export https_proxy="http://$proxy_user:$proxy_password@$proxy_uri"
-
-# プロキシを通じてGoogleにリクエストを送信してテスト
 response=$(curl -s -o /dev/null -w "%{http_code}" $target_url)
 
 if [ $response -eq 200 ]; then
