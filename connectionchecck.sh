@@ -8,10 +8,9 @@ target_url="https://mirrors.ustc.edu.cn/ros2/ubuntu/"
 # https://mirrors.tuna.tsinghua.edu.cn/ros2/ubuntu/
 
 # setup proxy 
-SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config --query SecretString --output text)
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config-yamabe --query SecretString --output text --region us-west-2)
 export http_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
 export https_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
-
 response=$(curl -s -o /dev/null -w "%{http_code}" $target_url)
 
 if [ $response -eq 200 ]; then

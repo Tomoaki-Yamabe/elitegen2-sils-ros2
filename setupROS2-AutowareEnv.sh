@@ -2,10 +2,9 @@
 
 
 # setup proxy 
-SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config --query SecretString --output text)
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config-yamabe --query SecretString --output text --region us-west-2)
 export http_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
 export https_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
-
 # Docker
 sudo apt update -y -o Acquire::http::Proxy=$http_proxy -o Acquire::https::Proxy=$https_proxy
 sudo apt install -y docker.io -o Acquire::http::Proxy=$http_proxy -o Acquire::https::Proxy=$https_proxy

@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # setup proxy 
-SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config --query SecretString --output text)
+SECRET_JSON=$(aws secretsmanager get-secret-value --secret-id proxy-config-yamabe --query SecretString --output text --region us-west-2)
+export http_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
+export https_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
 export http_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
 export https_proxy=$(echo $SECRET_JSON | jq -r .https_proxy)
 
