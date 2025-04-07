@@ -1,0 +1,10 @@
+onpre 
+
+[System.Environment]::SetEnvironmentVariable("AWS_SDK_LOAD_CONFIG", "1", "Machine")
+Restart-Service AmazonCloudWatchAgent
+
+& "C:\Program Files\Amazon\AmazonCloudWatchAgent\amazon-cloudwatch-agent-ctl.ps1" `
+  -a fetch-config `
+  -m onPrem `
+  -s `
+  -c ssm:AmazonCloudWatch-windows
