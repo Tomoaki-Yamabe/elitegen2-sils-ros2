@@ -1,5 +1,10 @@
 onpre 
 
+# download agent file
+https://amazoncloudwatch-agent.s3.amazonaws.com/windows/amd64/latest/amazon-cloudwatch-agent.msi
+msiexec /i amazon-cloudwatch-agent.msi
+
+
 [System.Environment]::SetEnvironmentVariable("AWS_SDK_LOAD_CONFIG", "1", "Machine")
 Restart-Service AmazonCloudWatchAgent
 
