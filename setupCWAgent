@@ -8,8 +8,19 @@ msiexec /i amazon-cloudwatch-agent.msi
 [System.Environment]::SetEnvironmentVariable("AWS_SDK_LOAD_CONFIG", "1", "Machine")
 Restart-Service AmazonCloudWatchAgent
 
+
+$env:AWS_REGION = "ap-northeast-1"
 & "C:\Program Files\Amazon\AmazonCloudWatchAgent\amazon-cloudwatch-agent-ctl.ps1" `
   -a fetch-config `
   -m onPrem `
   -s `
   -c ssm:AmazonCloudWatch-windows
+
+// 必要ならSSMAgentのクレデンシャルが使われるように変更
+[System.Environment]::SetEnvironmentVariable("AWS_SDK_LOAD_CONFIG", $null, "Machine")
+Remove-Item -Path "C:\Windows\System32\config\systemprofile\.aws\credentials"
+
+Remove-Item -Recurse -Force "C:\ProgramData\Amazon\AmazonCloudWatchAgent"
+New-Item -Path "C:\ProgramData\Amazon\AmazonCloudWatchAgent\Configs" -ItemType Directory -Force
+
+
