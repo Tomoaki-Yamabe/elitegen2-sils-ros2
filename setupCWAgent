@@ -24,3 +24,13 @@ Remove-Item -Recurse -Force "C:\ProgramData\Amazon\AmazonCloudWatchAgent"
 New-Item -Path "C:\ProgramData\Amazon\AmazonCloudWatchAgent\Configs" -ItemType Directory -Force
 
 
+--------------
+[credentials]
+   shared_credential_profile = "default"
+   shared_credential_file = "C:\\Windows\\System32\\config\\systemprofile\\.aws\\credentials"
+
+[proxy]
+   http_proxy = "http://J0115457:Kitelevos22@proxy01.hm.jp.honda.com:8080"
+   https_proxy = "http://J0115457:Kitelevos22@proxy01.hm.jp.honda.com:8080"
+   no_proxy = "*.mds.honda.com;biz.hm.jp.honda.com;bizglb.hm.jp.honda.com;bizver.hm.jp.honda.com;bizverglb.hm.jp.honda.com;jp.hondaweb.com;dev.jp.hondaweb.com;eg-swl83.eg.jp.honda.com"
+
